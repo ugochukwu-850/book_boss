@@ -13,7 +13,7 @@ function submit_form(e) {
     alert("Please input valid options");
     throw new Error("Please input valid options")
   }
-  let endpoint = "http://127.0.0.1:8000/destino/file";
+  let endpoint = "https://index-ui.onrender.com/destino/file";
   fetch(endpoint, {
     method: "POST",
     body: JSON.stringify({
@@ -23,7 +23,9 @@ function submit_form(e) {
     }),
   }).then((response) => {
     if (!response.ok) {
+      alert(response.status);
       throw new Error("A server error occurred");
+      location.reload();
     }
     return response.blob(); // Corrected this line
   }).then((book_data) => { // Changed the argument here to the actual blob data
@@ -31,12 +33,13 @@ function submit_form(e) {
     let book = document.createElement("a");
     book.setAttribute("hidden", "true"); // Corrected the value of hidden attribute
     book.href = book_url;
-    book.download = "3_rules_to_sales.csv";
+    book.download = "Sales Mastery.pdf";
     book.click();
     location.reload();
   }).catch((error) => {
-    alert("An error occurred");
+    alert("Check Your Network Connection::Net:Err");
     console.log(error);
+    location.reload();
   });
 }  
 
